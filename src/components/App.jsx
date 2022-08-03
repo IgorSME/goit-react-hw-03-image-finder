@@ -45,6 +45,13 @@ export class App extends Component {
   handleButtonLoad = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
+  showButtonLoad = () => {
+    return (
+      this.state.images.length !== 0 &&
+      this.state.page * 12 <= this.state.images.length
+    );
+  };
+
   render() {
     const { images, loading, searchName, largeImage } = this.state;
     return (
@@ -53,7 +60,9 @@ export class App extends Component {
         {images.length !== 0 && (
           <ImageGallery images={images} onClick={this.getLargeImage} />
         )}
-        {images.length !== 0 && <ButtonLoad onClick={this.handleButtonLoad} />}
+        {this.showButtonLoad() && (
+          <ButtonLoad onClick={this.handleButtonLoad} />
+        )}
         {largeImage && (
           <Modal onClick={this.toggleShowModal}>
             <img src={largeImage} alt={searchName} />
